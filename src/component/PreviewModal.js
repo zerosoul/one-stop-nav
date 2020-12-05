@@ -50,12 +50,12 @@ const StyledWrapper = styled.section`
       position: relative;
       transition: all 0.5s ease-in-out;
       iframe {
-        border: 0;
-        height: 100%;
-        left: 0;
         position: absolute;
+        left: 0;
         top: 0;
+        height: 90vh;
         width: 100%;
+        border: 0;
       }
     }
 
@@ -196,7 +196,7 @@ export default function PreviewModal({ url = '', visible = false, toggleVisible 
           <button className="btn" onClick={handleFullScreen}>
             <img src={IconFS} alt="全屏" />
           </button>
-          <a className="btn" href="//baidu.com" target={'_blank'}>
+          <a className="btn" href={url} target={'_blank'}>
             <img src={IconOpen} alt="新窗口打开" />
           </a>
         </div>
