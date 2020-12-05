@@ -69,6 +69,7 @@ const StyledWrapper = styled.section`
   }
   .setting {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     position: absolute;
@@ -84,7 +85,7 @@ const StyledWrapper = styled.section`
       border-radius: 50%;
       box-shadow: 0 0 8px 2px #484848;
       &:not(:last-child) {
-        margin-right: 0.1rem;
+        margin-bottom: 0.1rem;
       }
       img {
         width: 100%;
