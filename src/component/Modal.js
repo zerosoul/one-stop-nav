@@ -96,7 +96,7 @@ export default function Modal({ visible = false, toggleVisible = null }) {
   return visible ? (
     <ModalWrapper>
       <StyledWrapper>
-        <div className="modal ">
+        <div className="modal animate__animated animate__fadeInDown">
           <div className="add">
             <input placeholder="名称" className="name" />
             <input placeholder="地址" className="url" />

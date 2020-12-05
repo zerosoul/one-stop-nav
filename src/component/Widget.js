@@ -1,5 +1,8 @@
+import { useState } from 'react';
 import styled from 'styled-components';
-const StyledWrapper = styled.a`
+import IconClose from '../asset/img/icon.HTML5.png';
+
+const StyledWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -19,12 +22,16 @@ const StyledWrapper = styled.a`
     border: 0.01rem solid #e8e8e8;
     transition: all 0.5s;
     img {
-      height: 0.3rem;
+      height: 0.4rem;
+      transition: all 0.2s;
     }
   }
   &:hover .icon {
     box-shadow: 0rem 0.08rem 0.16rem 0rem #ececec,
       0rem 0.02rem 0.04rem 0rem rgba(213, 213, 213, 0.5), 0rem 0.04rem 0.24rem 0rem #a8a8a8;
+    img {
+      transform: scale(1.1);
+    }
   }
   .title {
     margin: 0.12rem 0 0 0;
@@ -63,13 +70,17 @@ const StyledWrapper = styled.a`
 
 export default function Widget({
   themeColor = '#333',
-  icon = 'https://www.apple.com/favicon.ico',
+  icon = '',
   title = '标题',
-  url = '#',
   showMenu = null,
   add,
+  url = '',
   ...rest
 }) {
+  const [ico, setIco] = useState(icon);
+  const handleImageError = () => {
+    setIco(IconClose);
+  };
   const handleContextMenu = (evt) => {
     evt.preventDefault();
     if (showMenu) {
@@ -81,16 +92,26 @@ export default function Widget({
     }
     return false;
   };
+  console.log({ url });
+  let iconPrefix = '';
+  try {
+    let urlObj = new URL(url);
+    iconPrefix = `${urlObj.origin}${urlObj.pathname}`.endsWith('/') ? url : `${url}/`;
+  } catch (error) {
+    console.log({ error });
+  }
   return (
     <StyledWrapper
-      href={url}
-      target="_blank"
       className={add && 'add'}
       bgColor={themeColor}
       onContextMenu={handleContextMenu}
       {...rest}
     >
-      <div className="icon">{!add && <img src={icon} alt="logo" />}</div>
+      <div className="icon">
+        {!add && (
+          <img onError={handleImageError} src={ico ? ico : `${iconPrefix}favicon.ico`} alt="logo" />
+        )}
+      </div>
 
       <h2 className="title">{add ? '添加导航' : title}</h2>
     </StyledWrapper>

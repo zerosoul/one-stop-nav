@@ -10,7 +10,7 @@ const StyledWrapper = styled.section`
     width: 4.68rem;
   }
   .search {
-    padding-top: 0.91rem;
+    padding-top: 0.5rem;
     padding-bottom: 0.6rem;
     width: 100%;
   }
