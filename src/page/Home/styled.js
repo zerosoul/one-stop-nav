@@ -21,16 +21,6 @@ const StyledWrapper = styled.section`
     /* margin-right: 0.24rem; */
     justify-content: space-between;
   }
-  .add_widget {
-    position: fixed;
-    bottom: 0.36rem;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 0.14rem;
-    font-weight: 400;
-    color: #333;
-    line-height: 0.25rem;
-  }
 `;
 
 export default StyledWrapper;

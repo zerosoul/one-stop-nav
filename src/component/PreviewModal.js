@@ -6,6 +6,7 @@ import IconPC from '../asset/img/icon.pc.png';
 import IconMobile from '../asset/img/icon.mobile.png';
 import IconFS from '../asset/img/icon.full-screen.png';
 import IconOpen from '../asset/img/icon.open.png';
+import { getPrefixPath } from '../util';
 
 const modalRoot = document.querySelector('#modal-root');
 const StyledWrapper = styled.section`
@@ -20,7 +21,6 @@ const StyledWrapper = styled.section`
   align-items: center;
   .modal {
     position: relative;
-    background: #fff;
     border-radius: 0.04rem;
     padding: 0.08rem;
     min-height: 60vh;
@@ -32,7 +32,7 @@ const StyledWrapper = styled.section`
     resize: horizontal;
     background: rgba(2, 2, 2, 0.8);
     .loading {
-      color: #fff;
+      color: ${({ themeColor }) => themeColor};
       z-index: 996;
       font-size: 0.22rem;
       font-weight: 800;
@@ -81,7 +81,7 @@ const StyledWrapper = styled.section`
       width: 0.4rem;
       height: 0.4rem;
       padding: 0.1rem;
-      border: 1px solid #333;
+      border: 1px solid ${({ themeColor }) => themeColor};
       border-radius: 50%;
       box-shadow: 0 0 8px 2px #484848;
       &:not(:last-child) {
@@ -122,6 +122,33 @@ const StyledWrapper = styled.section`
       height: 0.24rem;
     }
   }
+  .info {
+    position: absolute;
+    left: 0.1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 0.2rem;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    .logo {
+      width: 0.5rem;
+      height: 0.5rem;
+      border: 1px solid ${({ themeColor }) => themeColor};
+      border-radius: 50%;
+      padding: 0.12rem;
+      margin-bottom: 0.2rem;
+      img {
+        width: 100%;
+      }
+    }
+    .title {
+      writing-mode: vertical-lr;
+      letter-spacing: 0.05rem;
+      text-shadow: 0 0 7px ${({ themeColor }) => themeColor};
+    }
+  }
 `;
 const SizeMap = {
   mobile: {
@@ -133,7 +160,11 @@ const SizeMap = {
     height: '100vh'
   }
 };
-export default function PreviewModal({ url = '', visible = false, toggleVisible = null }) {
+export default function PreviewModal({
+  app: { url = '', title = '', icon = '', themeColor },
+  visible = false,
+  toggleVisible = null
+}) {
   const [screenSize, setScreenSize] = useState({ width: '8.16rem', height: 'auto' });
   const [aniEnd, setAniEnd] = useState(false);
   const iframe = useRef(null);
@@ -167,16 +198,28 @@ export default function PreviewModal({ url = '', visible = false, toggleVisible 
 
   return visible ? (
     <ModalWrapper>
-      <StyledWrapper {...screenSize}>
-        <div className="modal animate__animated animate__fadeInLeft" onAnimationEnd={handleAniEnd}>
+      <StyledWrapper {...screenSize} themeColor={themeColor}>
+        <div className="modal animate__animated animate__zoomIn" onAnimationEnd={handleAniEnd}>
           <div className="loading">加载中...</div>
           <div className="iframe-container">
             {aniEnd && (
-              <iframe ref={iframe} src={url} onLoad={handleIframeLoad} frameBorder="0"></iframe>
+              <iframe
+                rel="nofollow"
+                ref={iframe}
+                src={url}
+                onLoad={handleIframeLoad}
+                frameBorder="0"
+              ></iframe>
             )}
           </div>
         </div>
         <div onClick={toggleVisible} className="close" />
+        <div className="info">
+          <div className="logo">
+            <img src={icon ? icon : `${getPrefixPath(url)}favicon.ico`} alt="图标" />
+          </div>
+          <h2 className="title">{title}</h2>
+        </div>
         <div className="setting">
           <button
             className="btn"

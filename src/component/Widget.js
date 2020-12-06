@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 import IconClose from '../asset/img/icon.HTML5.png';
+import { getPrefixPath } from '../util';
 
 const StyledWrapper = styled.div`
   display: flex;
@@ -20,7 +21,7 @@ const StyledWrapper = styled.div`
     box-shadow: 0rem 0.08rem 0.3rem 0rem #ececec, 0rem 0.02rem 0.04rem 0rem rgba(213, 213, 213, 0.5);
     border-radius: 0.04rem;
     border: 0.01rem solid #e8e8e8;
-    transition: all 0.5s;
+    transition: all 1s ease-in-out;
     img {
       height: 0.4rem;
       transition: all 0.2s;
@@ -30,7 +31,7 @@ const StyledWrapper = styled.div`
     box-shadow: 0rem 0.08rem 0.16rem 0rem #ececec,
       0rem 0.02rem 0.04rem 0rem rgba(213, 213, 213, 0.5), 0rem 0.04rem 0.24rem 0rem #a8a8a8;
     img {
-      transform: scale(1.1);
+      transform: scale(1.2);
     }
   }
   .title {
@@ -68,15 +69,8 @@ const StyledWrapper = styled.div`
   }
 `;
 
-export default function Widget({
-  themeColor = '#333',
-  icon = '',
-  title = '标题',
-  showMenu = null,
-  add,
-  url = '',
-  ...rest
-}) {
+export default function Widget({ data = {}, updateCurrAPP, showMenu = null, add, ...rest }) {
+  const { themeColor = '#333', icon = '', title = '标题', url = '' } = data;
   const [ico, setIco] = useState(icon);
   const handleImageError = () => {
     setIco(IconClose);
@@ -84,22 +78,19 @@ export default function Widget({
   const handleContextMenu = (evt) => {
     evt.preventDefault();
     if (showMenu) {
-      let scrollTop = document.documentElement.scrollTop || document.body.scrollTop; // 获取垂直滚动条位置
-      let scrollLeft = document.documentElement.scrollLeft || document.body.scrollLeft; // 获取水平滚动条位置
-      let left = evt.clientX + scrollLeft;
-      let top = evt.clientY + scrollTop;
+      // let scrollTop = document.documentElement.scrollTop || document.body.scrollTop; // 获取垂直滚动条位置
+      // let scrollLeft = document.documentElement.scrollLeft || document.body.scrollLeft; // 获取水平滚动条位置
+      // let left = evt.clientX + scrollLeft;
+      // let top = evt.clientY + scrollTop;
+      let left = evt.clientX;
+      let top = evt.clientY;
+      console.log({ left, top });
       showMenu({ left, top });
+      updateCurrAPP(data);
     }
     return false;
   };
-  console.log({ url });
-  let iconPrefix = '';
-  try {
-    let urlObj = new URL(url);
-    iconPrefix = `${urlObj.origin}${urlObj.pathname}`.endsWith('/') ? url : `${url}/`;
-  } catch (error) {
-    console.log({ error });
-  }
+
   return (
     <StyledWrapper
       className={add && 'add'}
@@ -109,7 +100,11 @@ export default function Widget({
     >
       <div className="icon">
         {!add && (
-          <img onError={handleImageError} src={ico ? ico : `${iconPrefix}favicon.ico`} alt="logo" />
+          <img
+            onError={handleImageError}
+            src={ico ? ico : `${getPrefixPath(url)}favicon.ico`}
+            alt="logo"
+          />
         )}
       </div>
 
