@@ -2,24 +2,34 @@ import styled from 'styled-components';
 
 const StyledWrapper = styled.section`
   margin: 0 auto;
-  width: 8rem;
+  width: 8.6rem;
   display: flex;
   flex-direction: column;
   align-items: center;
   @media screen and (max-width: 414px) {
-    width: 4.68rem;
+    width: 5.28rem;
   }
   .search {
-    padding-top: 0.5rem;
-    padding-bottom: 0.6rem;
+    padding-top: 0.2rem;
+    padding-bottom: 0.3rem;
     width: 100%;
   }
   .widgets {
-    display: flex;
-    flex-wrap: wrap;
     width: 100%;
-    /* margin-right: 0.24rem; */
-    justify-content: space-between;
+    .swiper-container {
+      padding: 0 0.3rem;
+      &.search_mode {
+        display: none;
+      }
+      .swiper-slide {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+      }
+      .swiper-pagination {
+        bottom: -0.2rem;
+      }
+    }
   }
 `;
 

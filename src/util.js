@@ -8,5 +8,14 @@ const getPrefixPath = (url) => {
   }
   return iconPrefix;
 };
+const splitToChunks = (array, parts = 15) => {
+  let tmpArr = [...array];
+  let loopCount = Math.ceil(tmpArr.length / parts);
+  let result = [];
+  for (let i = loopCount; i > 0; i--) {
+    result.push(tmpArr.splice(0, parts));
+  }
+  return result;
+};
 
-export { getPrefixPath };
+export { getPrefixPath, splitToChunks };

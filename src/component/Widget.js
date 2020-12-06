@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import styled from 'styled-components';
-import IconClose from '../asset/img/icon.HTML5.png';
+import IconDefault from '../asset/img/icon.HTML5.png';
 import { getPrefixPath } from '../util';
 
 const StyledWrapper = styled.div`
@@ -18,9 +18,10 @@ const StyledWrapper = styled.div`
     justify-content: center;
     align-items: center;
     background: ${({ bgColor }) => bgColor};
-    box-shadow: 0rem 0.08rem 0.3rem 0rem #ececec, 0rem 0.02rem 0.04rem 0rem rgba(213, 213, 213, 0.5);
+    /* box-shadow: 0rem 0.08rem 0.3rem 0rem #ececec, 0rem 0.02rem 0.04rem 0rem rgba(213, 213, 213, 0.5); */
     border-radius: 0.04rem;
-    border: 0.01rem solid #e8e8e8;
+    /* border: 0.01rem solid #e8e8e8; */
+    border: none;
     transition: all 1s ease-in-out;
     img {
       height: 0.4rem;
@@ -28,17 +29,17 @@ const StyledWrapper = styled.div`
     }
   }
   &:hover .icon {
-    box-shadow: 0rem 0.08rem 0.16rem 0rem #ececec,
-      0rem 0.02rem 0.04rem 0rem rgba(213, 213, 213, 0.5), 0rem 0.04rem 0.24rem 0rem #a8a8a8;
+    /* box-shadow: 0rem 0.08rem 0.16rem 0rem #ececec, */
+    /* 0rem 0.02rem 0.04rem 0rem rgba(213, 213, 213, 0.5), 0rem 0.04rem 0.24rem 0rem #a8a8a8; */
     img {
       transform: scale(1.2);
     }
   }
   .title {
-    margin: 0.12rem 0 0 0;
+    margin: 0.1rem 0 0 0;
     font-size: 0.14rem;
     font-weight: 400;
-    color: #666;
+    color: #444;
     line-height: 0.2rem;
     text-align: center;
     width: 1.4rem;
@@ -73,7 +74,7 @@ export default function Widget({ data = {}, updateCurrAPP, showMenu = null, add,
   const { themeColor = '#333', icon = '', title = '标题', url = '' } = data;
   const [ico, setIco] = useState(icon);
   const handleImageError = () => {
-    setIco(IconClose);
+    setIco(IconDefault);
   };
   const handleContextMenu = (evt) => {
     evt.preventDefault();
